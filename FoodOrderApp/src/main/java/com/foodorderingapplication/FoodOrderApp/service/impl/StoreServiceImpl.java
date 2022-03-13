@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.foodorderingapplication.FoodOrderApp.dto.StoreDetails;
 import com.foodorderingapplication.FoodOrderApp.dto.StoreResponseDTO;
@@ -12,6 +13,7 @@ import com.foodorderingapplication.FoodOrderApp.entity.Store;
 import com.foodorderingapplication.FoodOrderApp.repo.StoreRepo;
 import com.foodorderingapplication.FoodOrderApp.service.StoreService;
 
+@Service
 public class StoreServiceImpl implements StoreService {
 
 	@Autowired

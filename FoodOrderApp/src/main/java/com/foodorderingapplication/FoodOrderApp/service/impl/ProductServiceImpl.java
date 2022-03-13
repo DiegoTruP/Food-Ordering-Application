@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.foodorderingapplication.FoodOrderApp.dto.ProductRequestDTO;
 import com.foodorderingapplication.FoodOrderApp.entity.Product;
@@ -13,6 +14,7 @@ import com.foodorderingapplication.FoodOrderApp.repo.ProductRepo;
 import com.foodorderingapplication.FoodOrderApp.repo.StoreRepo;
 import com.foodorderingapplication.FoodOrderApp.service.ProductService;
 
+@Service
 public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
