@@ -15,6 +15,7 @@ import com.foodorderingapplication.FoodOrderApp.dto.ProductResponseDTO;
 import com.foodorderingapplication.FoodOrderApp.entity.Product;
 import com.foodorderingapplication.FoodOrderApp.entity.ProductCategory;
 import com.foodorderingapplication.FoodOrderApp.entity.Store;
+import com.foodorderingapplication.FoodOrderApp.exception.StoreNotFoundException;
 import com.foodorderingapplication.FoodOrderApp.repo.ProductRepo;
 import com.foodorderingapplication.FoodOrderApp.repo.StoreRepo;
 import com.foodorderingapplication.FoodOrderApp.service.ProductService;
@@ -36,9 +37,10 @@ public class ProductServiceImpl implements ProductService {
 		product.setProductCategory(ProductCategory.valueOf(productRequestDto.getProductCategory()));
 		
 		Optional<Store> storeOptional = storeRepo.findById(productRequestDto.getStoreId());
-		if(storeOptional.isPresent())
-			product.setStore(storeOptional.get());
-		
+		if(storeOptional.isEmpty())
+			throw new StoreNotFoundException("Store not found: " + productRequestDto.getStoreId());
+			
+		product.setStore(storeOptional.get());
 		productRepo.save(product);
 	}
 
@@ -46,6 +48,10 @@ public class ProductServiceImpl implements ProductService {
 	public ProductResponseDTO getAllProductsByStore(Integer storeId) {
 		List<Product> productList = new ArrayList<Product>();
 		
+		Optional<Store> storeOptional = storeRepo.findById(storeId);
+		if(storeOptional.isEmpty())
+			throw new StoreNotFoundException("Store not found: " + storeId);
+			
 		productRepo.findAll().forEach(product -> productList.add(product));
 		List<ProductDetails> productDetailsList = productList.stream()
 				.map(product -> {
