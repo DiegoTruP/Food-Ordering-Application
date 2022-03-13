@@ -1,7 +1,5 @@
 package com.foodorderingapplication.FoodOrderApp.dto;
 
-import java.time.LocalDate;
-
 public class StoreDetails {
 	private Integer storeId;
 	private String storeName;

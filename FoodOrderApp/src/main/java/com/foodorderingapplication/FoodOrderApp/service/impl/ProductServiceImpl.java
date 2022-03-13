@@ -1,12 +1,17 @@
 package com.foodorderingapplication.FoodOrderApp.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foodorderingapplication.FoodOrderApp.dto.ProductDetails;
 import com.foodorderingapplication.FoodOrderApp.dto.ProductRequestDTO;
+import com.foodorderingapplication.FoodOrderApp.dto.ProductResponseDTO;
 import com.foodorderingapplication.FoodOrderApp.entity.Product;
 import com.foodorderingapplication.FoodOrderApp.entity.ProductCategory;
 import com.foodorderingapplication.FoodOrderApp.entity.Store;
@@ -35,6 +40,29 @@ public class ProductServiceImpl implements ProductService {
 			product.setStore(storeOptional.get());
 		
 		productRepo.save(product);
+	}
+
+	@Override
+	public ProductResponseDTO getAllProductsByStore(Integer storeId) {
+		List<Product> productList = new ArrayList<Product>();
+		
+		productRepo.findAll().forEach(product -> productList.add(product));
+		List<ProductDetails> productDetailsList = productList.stream()
+				.map(product -> {
+					ProductDetails productDetail = new ProductDetails();
+					BeanUtils.copyProperties(product, productDetail);
+					
+					productDetail.setProductCategory(product.getProductCategory().toString());
+					productDetail.setStoreId(product.getStore().getStoreId());
+					return productDetail;
+					})
+				.filter(product -> product.getStoreId() == storeId)
+				.collect(Collectors.toList());
+		
+		ProductResponseDTO productResponseDTO = new ProductResponseDTO("Store products fetched success", 200);
+		productResponseDTO.setProductList(productDetailsList);
+		
+		return productResponseDTO;
 	}
 
 	
