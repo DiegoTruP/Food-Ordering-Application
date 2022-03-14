@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -22,6 +23,7 @@ public class OrderDetailRequestDTO {
 	@Min(value = 1,message = "storeId should be a number greater or equal to 1")
 	private Integer storeId;
 	@NotNull
+	@NotEmpty(message = "Order Product List should not be empty")
 	private List<OrderProduct> orderProductList = new ArrayList<OrderProduct>();
 	@NotNull
 	@Min(value = 0,message = "total price should be a number greater or equal to 0")

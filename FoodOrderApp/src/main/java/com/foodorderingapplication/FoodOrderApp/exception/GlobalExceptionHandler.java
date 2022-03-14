@@ -25,13 +25,13 @@ public class GlobalExceptionHandler {
 	
 	
 	@ExceptionHandler(MismatchingPriceException.class)
-	public ResponseEntity<ErrorResponse> handlerPriceException(MismatchingPriceException ex){
+	public ResponseEntity<ErrorResponse> handlePriceException(MismatchingPriceException ex){
 		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(),ApiConstants.PRICE_NOT_MATCH);
 		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorResponse> handlerValidationException(MethodArgumentNotValidException ex){
+	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex){
 		ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse("Invalid Arguments Passed",ApiConstants.INVALID_ARGS);
 		ex.getBindingResult().getFieldErrors().stream().forEach(error -> {
 			validationErrorResponse.getInvalidArguments().put(error.getField(),error.getDefaultMessage());	
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<ErrorResponse> handlerConstraintValidationException(ConstraintViolationException ex){
+	public ResponseEntity<ErrorResponse> handleConstraintValidationException(ConstraintViolationException ex){
 		ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse("Invalid Arguments Passed",ApiConstants.INVALID_ARGS);
 		ex.getConstraintViolations().stream().forEach(error -> {
 			validationErrorResponse.getInvalidArguments().put(error.getPropertyPath().toString(),error.getMessage());	
@@ -56,10 +56,24 @@ public class GlobalExceptionHandler {
 	
 	
 	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<ErrorResponse> handlerValidationException(IllegalArgumentException ex){
+	public ResponseEntity<ErrorResponse> handleValidationException(IllegalArgumentException ex){
 		ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse("Invalid Arguments Passed",ApiConstants.INVALID_ARGS);
 		
 		validationErrorResponse.getInvalidArguments().put("Enum", ex.getMessage());
+		
+		validationErrorResponse.setDate(LocalDateTime.now());
+		
+		return new ResponseEntity<ErrorResponse>(validationErrorResponse,HttpStatus.OK);
+	}
+	
+	@ExceptionHandler(ProductNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException ex){
+		ValidationErrorResponse validationErrorResponse = new ValidationErrorResponse(ex.getMessage(),ApiConstants.PRODUCT_NOT_FOUND);
+		
+		ex.getProductNotFoundList().stream().forEach(productNotFound -> 
+		{
+			validationErrorResponse.getInvalidArguments().put("Product ID:"+productNotFound.getProductId().toString(), "Product Not Found");	
+		});
 		
 		validationErrorResponse.setDate(LocalDateTime.now());
 		
