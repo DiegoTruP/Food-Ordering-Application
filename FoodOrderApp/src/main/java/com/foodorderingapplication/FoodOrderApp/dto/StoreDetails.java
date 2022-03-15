@@ -6,6 +6,17 @@ public class StoreDetails {
 	private String storeDescription;
 	private float rating;
 	
+	public StoreDetails() {
+		super();
+	}
+	public StoreDetails(Integer storeId, String storeName, String storeDescription, float rating) {
+		super();
+		this.storeId = storeId;
+		this.storeName = storeName;
+		this.storeDescription = storeDescription;
+		this.rating = rating;
+	}
+	
 	public Integer getStoreId() {
 		return storeId;
 	}
