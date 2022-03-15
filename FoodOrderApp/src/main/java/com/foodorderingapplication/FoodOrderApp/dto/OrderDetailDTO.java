@@ -20,6 +20,7 @@ public class OrderDetailDTO {
 	private String instruction;
 	private OrderStatus status;
 	
+	
 	public Integer getOrderDetailId() {
 		return orderDetailId;
 	}

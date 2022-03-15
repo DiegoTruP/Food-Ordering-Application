@@ -9,6 +9,6 @@ public interface OrderDetailService {
 
 	OrderDetailDTO saveOrderDetail(OrderDetailRequestDTO orderRequestDTO);
 
-	List<OrderDetailDTO> getOrderDetailByUserId(Integer userId);
+	List<OrderDetailDTO> getOrderDetailByUserId(Integer userId, Integer pageNo, Integer pageSize);
 
 }

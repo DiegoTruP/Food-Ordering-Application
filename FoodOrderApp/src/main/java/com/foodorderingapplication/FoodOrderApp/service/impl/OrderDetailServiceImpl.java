@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailDTO;
@@ -83,7 +85,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	}
 
 	@Override
-	public List<OrderDetailDTO> getOrderDetailByUserId(Integer userId) {
+	public List<OrderDetailDTO> getOrderDetailByUserId(Integer userId,Integer pageNo, Integer pageSize) {
 		
 		Optional<User> user = userRepo.findById(userId);
 		
@@ -91,8 +93,12 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			throw new UserNotFoundException("User ID "+ userId +" not found: ");
 		}
 		
-		List<OrderDetail> orderDetailList = orderDetailRepo.findAllByUserId(userId);
+		Pageable pages = PageRequest.of(pageNo,pageSize);
+		
+		List<OrderDetail> orderDetailList = orderDetailRepo.findAllByUserId(userId,pages);
 		List<OrderDetailDTO> orderDetailDtoList = new ArrayList<OrderDetailDTO>();
+//		List<OrderDetailDTO> orderDetailDtoList = orderDetailRepo.findAllDTOByUserId(userId);
+		System.out.println(orderDetailRepo.findAllDTOByUserId(userId).get(0).getUserId());
 		
 		orderDetailDtoList = orderDetailList.stream().map(orderDetail -> {
 			OrderDetailDTO orderDetailDto = new OrderDetailDTO();

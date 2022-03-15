@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailDTO;
@@ -40,10 +41,11 @@ public class OrderDetailController {
 	}
 	
 	@GetMapping("/users/{userId}/orderdetails")
-	public ResponseEntity<List<OrderDetailDTO>> getOrderDetailByUserId(@NotNull@Min(value = 1,message = "User should be greater than 1")@PathVariable Integer userId){
+	public ResponseEntity<List<OrderDetailDTO>> getOrderDetailByUserId(@NotNull@Min(value = 1,message = "User should be greater than 1")@PathVariable Integer userId, 
+			@RequestParam(defaultValue = "0") Integer pageNo, @RequestParam(defaultValue = "5") Integer pageSize){
 		List<OrderDetailDTO> orderDetailDtoList = new ArrayList<OrderDetailDTO>();
 		
-		orderDetailDtoList = orderDetailService.getOrderDetailByUserId(userId);
+		orderDetailDtoList = orderDetailService.getOrderDetailByUserId(userId, pageNo, pageSize);
 		
 		return new ResponseEntity<List<OrderDetailDTO>>(orderDetailDtoList,HttpStatus.OK);
 	}
