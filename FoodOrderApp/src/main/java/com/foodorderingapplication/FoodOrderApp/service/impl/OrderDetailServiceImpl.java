@@ -97,8 +97,8 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		
 		List<OrderDetail> orderDetailList = orderDetailRepo.findAllByUserId(userId,pages);
 		List<OrderDetailDTO> orderDetailDtoList = new ArrayList<OrderDetailDTO>();
-//		List<OrderDetailDTO> orderDetailDtoList = orderDetailRepo.findAllDTOByUserId(userId);
-		System.out.println(orderDetailRepo.findAllDTOByUserId(userId).get(0).getUserId());
+
+
 		
 		orderDetailDtoList = orderDetailList.stream().map(orderDetail -> {
 			OrderDetailDTO orderDetailDto = new OrderDetailDTO();

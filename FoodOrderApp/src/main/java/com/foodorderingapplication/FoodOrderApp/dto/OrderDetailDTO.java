@@ -21,6 +21,21 @@ public class OrderDetailDTO {
 	private OrderStatus status;
 	
 	
+	public OrderDetailDTO(Integer orderDetailId, LocalDate orderDate, Integer userId, Integer storeId, double totalPrice) {
+		super();
+		this.orderDetailId = orderDetailId;
+		this.orderDate = orderDate;
+		this.userId = userId;
+		this.storeId = storeId;
+		this.orderProductList = orderProductList;
+		this.totalPrice = totalPrice;
+	}
+	
+	public OrderDetailDTO() {
+		super();
+	}
+
+
 	public Integer getOrderDetailId() {
 		return orderDetailId;
 	}
