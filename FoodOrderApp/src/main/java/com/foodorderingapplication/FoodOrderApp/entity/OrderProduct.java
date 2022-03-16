@@ -9,6 +9,17 @@ public class OrderProduct {
 	private double quantity;
 	private double productPrice;
 	
+	
+	public OrderProduct() {
+		super();
+	}
+	
+	public OrderProduct(Integer productId, double quantity, double productPrice) {
+		super();
+		this.productId = productId;
+		this.quantity = quantity;
+		this.productPrice = productPrice;
+	}
 	public Integer getProductId() {
 		return productId;
 	}
