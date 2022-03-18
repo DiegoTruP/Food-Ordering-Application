@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 	ProductRepo productRepo;
 
 	@Override
-	public void saveProductDetails(ProductRequestDTO productRequestDto) {
+	public Product saveProductDetails(ProductRequestDTO productRequestDto) {
 		Product product = new Product();
 		BeanUtils.copyProperties(productRequestDto, product);
 		
@@ -42,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
 			
 		product.setStore(storeOptional.get());
 		productRepo.save(product);
+		
+		return product;
 	}
 
 	@Override

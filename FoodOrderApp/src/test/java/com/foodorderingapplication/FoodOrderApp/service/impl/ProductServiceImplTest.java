@@ -1,5 +1,9 @@
 package com.foodorderingapplication.FoodOrderApp.service.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -18,8 +22,7 @@ import com.foodorderingapplication.FoodOrderApp.entity.Address;
 import com.foodorderingapplication.FoodOrderApp.entity.Product;
 import com.foodorderingapplication.FoodOrderApp.entity.ProductCategory;
 import com.foodorderingapplication.FoodOrderApp.entity.Store;
-
-
+import com.foodorderingapplication.FoodOrderApp.exception.StoreNotFoundException;
 import com.foodorderingapplication.FoodOrderApp.repo.ProductRepo;
 import com.foodorderingapplication.FoodOrderApp.repo.StoreRepo;
 
@@ -65,6 +68,7 @@ public class ProductServiceImplTest {
 		store = new Store();
 		store.setStoreId(2);
 		store.setStoreName("Perro negro");
+		store.setStoreDescription("Pizzas para llevar");
 		store.setProductList(List.of(product));
 		store.setRating(4);
 		store.setStoreAddress(address);
@@ -73,7 +77,30 @@ public class ProductServiceImplTest {
 	
 	@Test
 	@DisplayName("Save Product Details: POSITIVE")
-	public void saveProductDetails() {
-		when(storeRepo.findById(2)).thenReturn(Optional.of(store))
+	public void saveProductDetailsTest() {
+		// stub storeRepo.findById
+		when(storeRepo.findById(2)).thenReturn(Optional.of(store));
+		
+		// stub productRepo.save
+		when(productRepo.save(any(Product.class))).thenAnswer(i -> {
+			Product product = i.getArgument(0);
+			product.setProductId(2);
+			
+			return product;
+		});
+		
+		Product productResult = productServiceImpl.saveProductDetails(productRequestDto);
+		assertNotNull(productResult);
+		assertEquals(2, productResult.getStore().getStoreId());
+		assertEquals("Pizza del perro negro", productResult.getProductName());
+	}
+	
+	@Test
+	@DisplayName("Save Product Details: NEGATIVE")
+	public void saveProductDetailsTestNegative() {
+		// stub storeRepo.findById
+		when(storeRepo.findById(2)).thenReturn(Optional.empty());
+		
+		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDto));
 	}
 }
