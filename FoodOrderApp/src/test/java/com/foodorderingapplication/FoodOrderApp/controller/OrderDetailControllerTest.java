@@ -1,4 +1,4 @@
-package com.foodorderingapplication.FoodOrderApp.cotroller;
+package com.foodorderingapplication.FoodOrderApp.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
