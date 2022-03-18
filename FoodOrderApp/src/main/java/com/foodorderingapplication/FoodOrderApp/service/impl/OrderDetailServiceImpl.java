@@ -95,7 +95,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		
 		Pageable pages = PageRequest.of(pageNo,pageSize);
 		
-		List<OrderDetail> orderDetailList = orderDetailRepo.findAllByUserId(userId,pages);
+		List<OrderDetail> orderDetailList = orderDetailRepo.findAllByUserId(userId,pages).getContent();
 		List<OrderDetailDTO> orderDetailDtoList = new ArrayList<OrderDetailDTO>();
 
 

@@ -13,7 +13,6 @@ public class UserRequestDTO {
 	@Size(min=8,message="Password must have more than 7 characters")
 	private String password;
 	@NotNull
-	@NotEmpty
 	@Min(1)
 	private Integer userId;
 	

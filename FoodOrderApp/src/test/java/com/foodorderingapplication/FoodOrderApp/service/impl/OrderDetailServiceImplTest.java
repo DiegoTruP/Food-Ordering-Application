@@ -15,6 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -62,6 +64,8 @@ public class OrderDetailServiceImplTest {
 	Product product;
 	
 	User user;
+	
+	Page<OrderDetail> page;
 	
 	
 	
@@ -115,6 +119,8 @@ public class OrderDetailServiceImplTest {
 		orderDetail2.setTotalPrice(35);
 		orderDetail2.setOrderProductList(List.of(orderProduct));
 		
+		page = new PageImpl<OrderDetail>(List.of(orderDetail,orderDetail2));
+		
 		
 	}
 	
@@ -166,7 +172,7 @@ public class OrderDetailServiceImplTest {
 		//userRepo.findById
 		when(userRepo.findById(1)).thenReturn(Optional.of(user));
 		//orderDetailRepo.findAllByUserId
-		when(orderDetailRepo.findAllByUserId(any(Integer.class),any(Pageable.class))).thenReturn(List.of(orderDetail,orderDetail2));
+		when(orderDetailRepo.findAllByUserId(any(Integer.class),any(Pageable.class))).thenReturn(page);
 		
 		List<OrderDetailDTO> orderList =  OrderDetailServiceImpl.getOrderDetailByUserId(1, 0, 5);
 		
