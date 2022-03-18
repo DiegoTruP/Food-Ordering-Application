@@ -3,7 +3,7 @@ package com.foodorderingapplication.FoodOrderApp.entity;
 import javax.persistence.Embeddable;
 
 @Embeddable
-class Address {
+public class Address {
 	private String street;
 	private String city;
 	private String pincode;
