@@ -46,24 +46,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductResponseDTO getAllProductsByStore(Integer storeId) {
-		List<Product> productList = new ArrayList<Product>();
-		
 		Optional<Store> storeOptional = storeRepo.findById(storeId);
 		if(storeOptional.isEmpty())
 			throw new StoreNotFoundException("Store not found: " + storeId);
-			
-		productRepo.findAll().forEach(product -> productList.add(product));
-		List<ProductDetails> productDetailsList = productList.stream()
-				.map(product -> {
-					ProductDetails productDetail = new ProductDetails();
-					BeanUtils.copyProperties(product, productDetail);
-					
-					productDetail.setProductCategory(product.getProductCategory().toString());
-					productDetail.setStoreId(product.getStore().getStoreId());
-					return productDetail;
-					})
-				.filter(product -> product.getStoreId() == storeId)
-				.collect(Collectors.toList());
+		
+		List<ProductDetails> productDetailsList = productRepo.findAllProductsByStore(storeOptional.get());
 		
 		ProductResponseDTO productResponseDTO = new ProductResponseDTO("Store products fetched success", 200);
 		productResponseDTO.setProductList(productDetailsList);

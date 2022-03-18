@@ -1,5 +1,7 @@
 package com.foodorderingapplication.FoodOrderApp.dto;
 
+import com.foodorderingapplication.FoodOrderApp.entity.ProductCategory;
+
 public class ProductDetails {
 
 	private Integer productId;
@@ -7,14 +9,15 @@ public class ProductDetails {
 	private String productDescription;
 	private double productPrice;
 	private boolean isAvailable;
-	private String productCategory;
-	private Integer storeId;
-	
-	public Integer getStoreId() {
-		return storeId;
-	}
-	public void setStoreId(Integer storeId) {
-		this.storeId = storeId;
+	private ProductCategory productCategory;
+	public ProductDetails(Integer productId, String productName, String productDescription, double productPrice,
+			boolean isAvailable, ProductCategory productCategory) {
+		this.productId = productId;
+		this.productName = productName;
+		this.productDescription = productDescription;
+		this.productPrice = productPrice;
+		this.isAvailable = isAvailable;
+		this.productCategory = productCategory;
 	}
 	public Integer getProductId() {
 		return productId;
@@ -46,10 +49,10 @@ public class ProductDetails {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
-	public String getProductCategory() {
+	public ProductCategory getProductCategory() {
 		return productCategory;
 	}
-	public void setProductCategory(String productCategory) {
+	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}
 	
