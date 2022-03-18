@@ -74,6 +74,6 @@ public class ProductServiceImplTest {
 	@Test
 	@DisplayName("Save Product Details: POSITIVE")
 	public void saveProductDetails() {
-		when(storeRepo.findById(2)).thenReturn(Optional.of(store))
+		when(storeRepo.findById(2)).thenReturn(Optional.of(store));
 	}
 }
