@@ -54,6 +54,9 @@ public class OrderDetailServiceImplTest {
 	
 	OrderDetail orderDetail;
 	
+	OrderDetail orderDetail2;
+	
+	
 	Store store;
 	
 	Product product;
@@ -105,6 +108,14 @@ public class OrderDetailServiceImplTest {
 		orderDetail.setTotalPrice(20);
 		orderDetail.setOrderProductList(List.of(orderProduct));
 		
+		orderDetail2 = new OrderDetail();
+		orderDetail2.setInstruction("Deliver in 30 min");
+		orderDetail2.setStoreId(1);
+		orderDetail2.setUserId(1);
+		orderDetail2.setTotalPrice(35);
+		orderDetail2.setOrderProductList(List.of(orderProduct));
+		
+		
 	}
 	
 	@Test
@@ -155,11 +166,12 @@ public class OrderDetailServiceImplTest {
 		//userRepo.findById
 		when(userRepo.findById(1)).thenReturn(Optional.of(user));
 		//orderDetailRepo.findAllByUserId
-		when(orderDetailRepo.findAllByUserId(any(Integer.class),any(Pageable.class))).thenReturn(List.of(orderDetail));
+		when(orderDetailRepo.findAllByUserId(any(Integer.class),any(Pageable.class))).thenReturn(List.of(orderDetail,orderDetail2));
 		
 		List<OrderDetailDTO> orderList =  OrderDetailServiceImpl.getOrderDetailByUserId(1, 0, 5);
 		
 		assertNotNull(orderList);
+		assertEquals(2,orderList.size());
 		assertEquals(OrderDetailDTO.class, orderList.get(0).getClass());
 		assertEquals(20, orderList.get(0).getTotalPrice());
 		assertEquals("Deliver in 15 min", orderList.get(0).getInstruction());
