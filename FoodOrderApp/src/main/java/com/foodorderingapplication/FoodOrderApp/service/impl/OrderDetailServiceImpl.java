@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.foodorderingapplication.FoodOrderApp.dto.OrderDTOProjection;
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailDTO;
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailRequestDTO;
 import com.foodorderingapplication.FoodOrderApp.entity.OrderDetail;
@@ -97,8 +98,9 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		
 		List<OrderDetail> orderDetailList = orderDetailRepo.findAllByUserId(userId,pages).getContent();
 		List<OrderDetailDTO> orderDetailDtoList = new ArrayList<OrderDetailDTO>();
+		//List<OrderDTOProjection> orderDtoProjection = orderDetailRepo.findAllByUserId(userId);
 
-
+		//orderDtoProjection.stream().forEach(order -> order.setOrderProductList(orderDetailRepo.findAllProductsByOrderId(order.getOrderDetailId())));
 		
 		orderDetailDtoList = orderDetailList.stream().map(orderDetail -> {
 			OrderDetailDTO orderDetailDto = new OrderDetailDTO();
