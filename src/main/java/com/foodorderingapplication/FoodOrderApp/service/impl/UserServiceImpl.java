@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
 	public UserResponseDTO AuthenticateUser(UserRequestDTO userRequestDTO) {
 		//List<User> user = userRepo.findAll();
 		UserResponseDTO userResponseDTO;
-		UserRequestDTO userDB = userRepo.findByUsername(userRequestDTO.getUserName());		
+		UserRequestDTO userDB = userRepo.findByUsername(userRequestDTO.getUserName());
 		
 		if(userDB==null) {
 			throw new UserNotFoundException("User "+ userRequestDTO.getUserName() +" not found: ");
