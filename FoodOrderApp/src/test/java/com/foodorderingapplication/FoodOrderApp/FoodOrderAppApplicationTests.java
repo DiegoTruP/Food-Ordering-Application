@@ -74,7 +74,7 @@ class FoodOrderAppApplicationTests {
 
 		HttpEntity<OrderDetailRequestDTO> request = new HttpEntity<>(orderDetailRequest);
 		
-		ResponseEntity<ResponseDTO> response = testRestTemplate.postForEntity("http://localhost:"+ port +"/orderdetails",orderDetailRequest, ResponseDTO.class);
+		ResponseEntity<OrderDetailResponseDTO> response = testRestTemplate.postForEntity("http://localhost:"+ port +"/orderdetails",orderDetailRequest, OrderDetailResponseDTO.class);
 		
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
 		assertThat(response.getBody().getStatusCode()).isEqualTo(200);
