@@ -27,7 +27,7 @@ import com.foodorderingapplication.FoodOrderApp.dto.UserResponseDTO;
 
 
 @WebMvcTest(UserController.class)
-public class UserControlleTest {
+public class UserControllerTest {
 	
 	@MockBean
 	UserService userService;
