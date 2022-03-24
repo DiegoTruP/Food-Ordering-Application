@@ -21,22 +21,22 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserResponseDTO AuthenticateUser(UserRequestDTO userRequestDTO) {
 		//List<User> user = userRepo.findAll();
-		UserResponseDTO userResponseDTO;
-		User userDB = userRepo.findByUsername(userRequestDTO.getUserName());		
-		
-		if(userDB==null) {
-			throw new UserNotFoundException("User "+ userRequestDTO.getUserName() +" not found: ");
-		}
-		if (!userDB.getPassword().equals(userRequestDTO.getPassword())) {
-			throw new UserPasswordIncorrectException("Password incorrect: "+userRequestDTO.getUserName());
-		}
-		
-		userResponseDTO = new UserResponseDTO("Login Successful", 200);
-		System.out.print(userDB.getUsername());
-		User user = userDB;
-		userResponseDTO.setUserId(user.getUserId());
-		
-		return userResponseDTO;
+				UserResponseDTO userResponseDTO;
+				UserRequestDTO userDB = userRepo.findByUsername(userRequestDTO.getUserName());
+				
+				if(userDB==null) {
+					throw new UserNotFoundException("User "+ userRequestDTO.getUserName() +" not found: ");
+				}
+				if (!userDB.getPassword().equals(userRequestDTO.getPassword())) {
+					throw new UserPasswordIncorrectException("Password incorrect: "+userRequestDTO.getUserName());
+				}
+				
+				userResponseDTO = new UserResponseDTO("Login Successful", 200);
+				System.out.print(userDB.getUserName());
+				//User user = userDB;
+				userResponseDTO.setUserId(userDB.getUserId());
+				
+				return userResponseDTO;
 	
 	}
 	
