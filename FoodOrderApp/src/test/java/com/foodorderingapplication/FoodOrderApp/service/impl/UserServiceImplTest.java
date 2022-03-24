@@ -42,17 +42,29 @@ public class UserServiceImplTest {
 	public void AuthenticateUserTest() {
 		
 		//userRepo.findByUsername
-		//when(userRepo.findByUsername("Kevin")).thenReturn(userRequestDTO);
-		when(userRepo.findByUsername("Kevin")).thenReturn(null);
+		when(userRepo.findByUsername("Kevin")).thenReturn(userRequestDTO);
+		//when(userRepo.findByUsername("Kevin")).thenReturn(null);
 		
+		
+		//assertThrows(UserNotFoundException.class, () -> userServiceImpl.AuthenticateUser(userRequestDTO));
+		
+		UserResponseDTO loginResult = userServiceImpl.AuthenticateUser(userRequestDTO);
+		assertNotNull(loginResult);
+		assertEquals(1, loginResult.getUserId());
+		
+	}
+	
+	@Test
+	@DisplayName("User NotFound Exception")
+	public void AuthenticateUserTestException() {
+		
+		//userRepo.findByUsername		
+		when(userRepo.findByUsername("Kevin")).thenReturn(null);		
 		
 		assertThrows(UserNotFoundException.class, () -> userServiceImpl.AuthenticateUser(userRequestDTO));
 		
-//		UserResponseDTO loginResult = userServiceImpl.AuthenticateUser(userRequestDTO);
-//		assertNotNull(loginResult);
-//		assertEquals(1, loginResult.getUserId());
-		
-		
 	}
+	
+	
 	
 }

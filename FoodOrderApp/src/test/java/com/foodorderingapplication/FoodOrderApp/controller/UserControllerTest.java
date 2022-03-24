@@ -27,7 +27,7 @@ import com.foodorderingapplication.FoodOrderApp.dto.UserResponseDTO;
 
 
 @WebMvcTest(UserController.class)
-public class UserControllerTest {
+public class UserControlleTest {
 	
 	@MockBean
 	UserService userService;
@@ -46,7 +46,7 @@ public class UserControllerTest {
 		userRequestDTO = new UserRequestDTO();
 		userRequestDTO.setUserId(1);
 		userRequestDTO.setUserName("Kevin");
-		userRequestDTO.setPassword("123456780");
+		userRequestDTO.setPassword("12345678");
 		
 		userResponseDTO = new UserResponseDTO("Login Successful",200);
 		userResponseDTO.setUserId(1);
@@ -55,8 +55,7 @@ public class UserControllerTest {
 	
 	@Test
 	public void LoginTest() throws Exception {
-		
-		
+				
 		when(userService.AuthenticateUser(any(UserRequestDTO.class))).thenReturn(userResponseDTO);
 		
 		MvcResult result = mockMvc.perform(post("/Login").content(asJsonString(userRequestDTO)).contentType(MediaType.APPLICATION_JSON))
@@ -64,12 +63,30 @@ public class UserControllerTest {
 			.andExpect(jsonPath("$.statusCode").value(200))
 			.andExpect(jsonPath("$.userId").value(1)).andReturn();
 		
-		//mockMvc.perform(asyncDispatch(result));
 		String responseBody = result.getResponse().getContentAsString();
 		
 		System.out.println(responseBody);
 		
 	}
+	
+	@Test
+	public void LoginTestException() throws Exception {
+		
+		userRequestDTO.setUserName("");
+		userRequestDTO.setPassword("");
+		when(userService.AuthenticateUser(any(UserRequestDTO.class))).thenReturn(userResponseDTO);
+		
+		MvcResult result = mockMvc.perform(post("/Login").content(asJsonString(userRequestDTO)).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())		
+			.andExpect(jsonPath("$.statusCode").value("MA400"))
+			.andExpect(jsonPath("$.message").value("Invalid Arguments Passed")).andReturn();
+		
+		//mockMvc.perform(asyncDispatch(result));
+		String responseBody = result.getResponse().getContentAsString();
+		
+		System.out.println(responseBody);
+		
+	}	
 
 	private String asJsonString(UserRequestDTO userRequestDTO2) {
 
