@@ -10,6 +10,9 @@ public class ProductDetails {
 	private double productPrice;
 	private boolean isAvailable;
 	private ProductCategory productCategory;
+	
+	public ProductDetails() {}
+	
 	public ProductDetails(Integer productId, String productName, String productDescription, double productPrice,
 			boolean isAvailable, ProductCategory productCategory) {
 		this.productId = productId;

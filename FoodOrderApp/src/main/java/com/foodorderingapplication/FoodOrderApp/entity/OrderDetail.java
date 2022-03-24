@@ -23,6 +23,7 @@ public class OrderDetail {
 	private LocalDate orderDate;
 	private Integer userId;
 	private Integer storeId;
+	private String instruction;
 	
 	@ElementCollection
 	@JoinTable(name = "orderProducts", joinColumns = @JoinColumn(name = "orderDetailId"))
@@ -87,4 +88,14 @@ public class OrderDetail {
 	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
+
+	public String getInstruction() {
+		return instruction;
+	}
+
+	public void setInstruction(String instruction) {
+		this.instruction = instruction;
+	}
+	
+	
 }

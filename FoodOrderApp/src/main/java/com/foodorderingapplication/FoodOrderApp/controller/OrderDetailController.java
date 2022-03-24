@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailDTO;
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailRequestDTO;
 import com.foodorderingapplication.FoodOrderApp.dto.OrderDetailResponseDTO;
@@ -32,10 +33,11 @@ public class OrderDetailController {
 	
 	@PostMapping("/orderdetails")
 	public ResponseEntity<OrderDetailResponseDTO> saveOrderDetail(@Valid @RequestBody OrderDetailRequestDTO orderRequestDTO){
-		OrderDetailDTO orderDetailDto =  orderDetailService.saveOrderDetail(orderRequestDTO);
+		OrderDetailDTO orderDetailDto =  new OrderDetailDTO();
+		orderDetailDto =orderDetailService.saveOrderDetail(orderRequestDTO);
 		
-		OrderDetailResponseDTO orderDetailResponse = new OrderDetailResponseDTO("Order done", 200);
-		orderDetailResponse.setOrderNumber(String.valueOf(orderDetailDto.getOrderDetailId()));
+		OrderDetailResponseDTO orderDetailResponse = new OrderDetailResponseDTO("Order done", 200,String.valueOf(orderDetailDto.getOrderDetailId()));
+		//orderDetailResponse.setOrderNumber(String.valueOf(orderDetailDto.getOrderDetailId()));
 		
 		return new ResponseEntity<OrderDetailResponseDTO>(orderDetailResponse, HttpStatus.ACCEPTED);
 	}

@@ -1,5 +1,7 @@
 package com.foodorderingapplication.FoodOrderApp.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,5 +15,6 @@ public interface UserRepo extends JpaRepository<User,Integer>{
 	
 	@Query("Select new com.foodorderingapplication.FoodOrderApp.dto.UserRequestDTO(a.userId,a. username, a.password) from User a where a.username = :username")
 	UserRequestDTO findByUsername(String username);
+
 	
 }

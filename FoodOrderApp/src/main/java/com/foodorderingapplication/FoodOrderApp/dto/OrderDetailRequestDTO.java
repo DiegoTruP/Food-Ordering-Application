@@ -30,6 +30,7 @@ public class OrderDetailRequestDTO {
 	@Max(value = Long.MAX_VALUE)
 	private double totalPrice;
 	@NotBlank
+	@NotNull
 	private String instruction;
 	
 	
