@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 public class UserRequestDTO {
 	
 
-	private Integer userId;
+
 	@NotEmpty(message = "User Name should not be emty")	
 	private String userName;
 	@NotEmpty(message = "Password should not be emty")
@@ -30,12 +30,7 @@ public class UserRequestDTO {
 		this.password = password;
 	}
 	
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+
 	public String getUserName() {
 		return userName;
 	}
